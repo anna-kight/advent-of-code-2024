@@ -8,9 +8,6 @@ def read_file(file_name):
   return reports
 
 def is_safe(report):
-  for i in range(len(report)):
-    report[i] = int(report[i])
-
   increasing = False
   for i in range(len(report)):
     if i == 0:
@@ -30,7 +27,17 @@ def is_safe(report):
 reports = read_file("input.txt")
 safe_count = 0
 for report in reports:
-  if is_safe(report):
+  int_reports = [int(x) for x in report]
+  if is_safe(int_reports):
     safe_count += 1
+  else:
+    for i in range(len(int_reports)):
+      with_out_level_i = int_reports[:i] + int_reports[i+1 :]
+      if is_safe(with_out_level_i):
+        safe_count += 1
+        break
 
 print("Safe reports: " + str(safe_count))
+
+# Part 1: 639
+# Part 2: 674
